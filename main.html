@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"></script>
+
+    <title>MobileNET prediction</title>
+</head>
+<body>
+    <!-- Locally run: use src [img: http://127.0.0.1:8080/assets/cat] -->
+    <img id="img" src="https://i.imgur.com/jlFgGpe.jpg" crossorigin='anonymous'>
+    <div 
+        id="output"
+        style="font-family:'Courier New', Courier, monospace;font-size: 24px; height: 300px;"
+    ></div>
+</body>
+<script>
+
+    const img = document.getElementById('img')
+    
+    // Local Run
+    img.crossOrigin = "Anonymous";
+
+    const output = document.getElementById('output')
+
+    mobilenet.load().then((model) => {
+        model.classify(img).then((predictions) => {
+            console.log(predictions);
+
+            for (let i = 0; i < predictions.length; i++) {
+                output.innerHTML += "<br/>" + predictions[i].className + " : " + predictions[i].probability;
+                
+            }
+
+        })
+    })
+</script>
+</html>
